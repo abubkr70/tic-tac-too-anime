@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>tic tac too anime</title>
+        <script src="https//cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>                  
+        <link rel="stylesheet" href="animegame.css"> 
+        <script src="animegame.js" defer></script>
+    </head>
+    <body>
+        <div class="one">
+        <span class="well">wellcome in</span>
+                <h1> Tic tac toe</h1>
+                </div>
+        <div class="layout">
+            <section class="panel-left">
+                <p>image waiting for you!</p>
+                <div id="winOverlay" aria-hidden="true">
+                    <button id="winClose" aria-label="Close">✕</button>
+                    <img id="winimg" alt="Wining image">
+                </div>
+            </section>
+            <section class="panel-right">
+                <div id="board"></div>
+                <div class="controls">
+                    <div id="status">Player <span id="player">X</span>'s turn</div>
+                    <button id="reset" type="button">Restart</button>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

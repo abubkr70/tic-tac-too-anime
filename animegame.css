@@ -1,0 +1,222 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 95%;
+  background-image: linear-gradient(54deg, rgb(247, 144, 232),rgb(239, 12, 106));  
+  /* body properties applied below */
+  font-family: serif;
+  gap: 1.6rem;
+  padding: 1rem;
+}
+
+/* Win image overlay (responsive, centered) */
+#winOverlay{
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  padding: 2vh 2vw;
+}
+#winOverlay.show{
+  display: flex;
+}
+#winimg{
+  max-width: 95vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  object-fit: contain;
+}
+
+/* Close button inside overlay */
+#winClose{
+  position: absolute;
+  top: 1.5vh;
+  right: 1.5vw;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10000;
+  font-size: 1.1rem;
+}
+#winClose:hover{ transform: scale(1.05); background: rgba(0,0,0,0.75); }
+
+@media (min-width: 1200px){
+  #winimg{ max-width: 70vw; max-height: 80vh; }
+}
+
+@media (max-width: 420px){
+  #winimg{ border-radius: 8px; max-height: 78vh; }
+  #winOverlay{ padding: 1vh 1vw; }
+}
+h1{
+  font-size: clamp(1.5rem,9vw,2.2rem);
+  text-align: center;
+  color: rgb(244, 237, 237);
+  margin-top: 10vh;
+}
+.well{
+  font-size: clamp(1.5rem,7vw,2.2rem);
+  text-align: center;
+  color: black;
+  margin-top: 2vh;
+}
+p{
+   font-size: clamp(1.5rem,7vw,2.2rem);
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+:root{
+  --cell-size: clamp(60px,22vw,160px);
+  --accent: rgb(236, 130, 253);
+  --accent-strong: rgb(182, 28, 129);
+  --muted-bg: rgba(255,255,255,0.12);
+  --surface: rgba(255,255,255,0.9);
+  --text-on-accent: #fff;
+}
+#board{
+  display: grid;
+  grid-template-columns: repeat(3,var(--cell-size));
+  grid-auto-rows: var(--cell-size);
+  width: min(92vw, calc(var(--cell-size) * 3));
+  gap: 0;
+  touch-action: manipulation;
+}
+.cell{
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgb(254, 249, 249);
+  background: rgb(95, 37, 74);
+  color: white;
+  cursor: pointer;
+  font-size: calc(var(--cell-size)*0.75);
+  font-weight: 600;
+  user-select: none;
+  border-radius: 8px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.cell:hover{
+  background: rgba(128, 128, 128, 0.529);
+}
+#board{
+  /* ensure the board is interactive */
+  pointer-events: auto;
+  opacity: 1;
+}
+/* controls layout */
+.controls{ display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+/* status badge */
+#status{
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .55rem .9rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--text-on-accent);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  font-weight: 700;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  line-height: 1;
+  text-align: center;
+  min-width: 160px;
+}
+
+/* reset button */
+#reset{
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  cursor: pointer;
+  padding: .55rem 1rem;
+  border-radius: 10px;
+  background: white;
+  color: var(--accent-strong);
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(17,0,20,0.18);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.14s ease;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  min-width: 120px;
+}
+#reset:hover{ transform: translateY(-3px); box-shadow: 0 14px 34px rgba(17,0,20,0.24); }
+#reset:active{ transform: translateY(0); }
+#reset:focus{ outline: 3px solid rgba(182,28,129,0.18); outline-offset: 3px; }
+
+/* ensure buttons shrink nicely on narrow screens */
+.controls > *{ flex: 0 1 auto; }
+
+
+@media (max-width: 600px){
+  :root{ --cell-size: clamp(48px,28vw,120px); }
+  h1{ margin-top: 4vh; }
+  .well, p{ font-size: clamp(1rem,4.5vw,1.25rem); }
+  #board{ width: min(92vw, calc(var(--cell-size) * 3)); }
+  #reset{ width: 28%; }
+}
+
+@media (max-width: 360px){
+  :root{ --cell-size: clamp(40px,30vw,96px); }
+  #reset{ width: 40%; }
+}
+
+/* Landscape split layout: left = image area, right = game area */
+@media (orientation: landscape){
+  .layout{ display: flex; min-height: 100vh; }
+  .panel-left, .panel-right{ flex: 1 1 50%; }
+  .panel-left{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 4vh 4vw; position: relative; }
+  .panel-right{ display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 4vh 4vw; }
+
+  /* Make the board fit the right panel */
+  #board{ width: min(92%, calc(var(--cell-size) * 3)); }
+
+  /* position the overlay inside left panel so it doesn't cover controls */
+  #winOverlay{
+    position: absolute;
+    inset: 6% 6% auto 6%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    border-radius: 12px;
+    z-index: 999;
+    padding: 1rem;
+  }
+  #winOverlay.show{ display: flex; }
+
+  /* Slightly larger image on wide screens */
+  #winimg{ max-width: 90%; max-height: 80vh; }
+
+  /* move close button inside top-right of left panel */
+  #winClose{ top: 1rem; right: 1rem; }
+}
+
+.one{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
